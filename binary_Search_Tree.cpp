@@ -46,3 +46,107 @@ bool nstack :: stack_empty(){
     if(top == 0) return true;
     else return false;
 }
+
+class bst_tree{
+    bst_node *root;
+    int csize;
+public :
+    bst_tree();
+    void insert_node(bst_node t);
+    void show_inorder();
+    bst_node search(string pnum);
+};
+
+bst_tree :: bst_tree(){
+    root = NULL;
+}
+
+void bst_tree :: insert_node(bst_node t){
+    bst_node *p;
+    bst_node *tmp;
+
+    tmp = new bst_node;
+    *tmp = t;
+    tmp->left = NULL;
+    tmp->right = NULL;
+
+    if(root == NULL){
+        root = tmp;
+        return;
+    }
+
+    p = root;
+    while(1){
+        if(p->phonenum == t.phonenum){
+            cout << "Insertion Failed : the Key " << t.phonenum << " already exists." << endl;
+            return;
+        }
+        if(p->phonenum < t.phonenum){
+            if(p->right == NULL){
+                p->right = tmp;
+                return;
+            }
+            else p = p->right;
+        }
+        else{
+            if(p->left == NULL){
+                p->left = tmp;
+                return;
+            }
+            else p = p->left;
+        }
+    }
+}
+
+void bst_tree :: show_inorder(){
+    nstack s1;
+    bst_node *t;
+
+    t = root;
+    while(1){
+        while(t != NULL){
+            s1.push(t);
+            t = t->left;
+        }
+        while(t == NULL){
+            if(s1.stack_empty()) return;
+            t = s1.pop();
+        }
+        cout << t->name << " : " << t->phonenum << " : " << t->birth << "\n";
+        t = t->right;
+    }
+}
+
+bst_node bst_tree :: search(string pnum){
+    bst_node *p;
+
+    p = root;
+    if(root == NULL){
+        bst_node tmp;
+        tmp.set_data("None", "00000000000", "0000");
+        cout << "The key " << pnum << " does not exist.\n";
+        return tmp;
+    }
+
+    while(1){
+        if(p->phonenum == pnum) return (*p);
+        if(p->phonenum < pnum){
+            if(p->right == NULL){
+                bst_node tmp;
+                tmp.set_data("None", "00000000000", "0000");
+                cout << "The key " << pnum << " does not exist.\n";
+                return tmp;
+            }
+            else p = p->right;
+        }
+        else{
+            if(p->left == NULL){
+                bst_node tmp;
+                tmp.set_data("None", "00000000000", "0000");
+                cout << "The key " << pnum << " does not exist.\n";
+                return tmp;
+            }
+            else p = p->left;
+        }
+    }
+}
